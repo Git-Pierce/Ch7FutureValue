@@ -19,9 +19,32 @@ namespace FutureValue
 
         private void btnCalculate_Click(object sender, EventArgs e)
         {
-            decimal monthlyInvestment = Convert.ToDecimal(txtMonthlyInvestment.Text);
-            decimal yearlyInterestRate = Convert.ToDecimal(txtInterestRate.Text);
-            int years = Convert.ToInt32(txtYears.Text);
+            int years = 0;
+            decimal yearlyInterestRate = 0;
+            decimal monthlyInvestment = 0;
+
+            try
+            {
+                monthlyInvestment = Convert.ToDecimal(txtMonthlyInvestment.Text);
+                yearlyInterestRate = Convert.ToDecimal(txtInterestRate.Text);
+                years = Convert.ToInt32(txtYears.Text);
+            }
+            catch (FormatException)
+            {
+
+                MessageBox.Show("A format exception has occured. Please check your entries", "Entry Error");
+            }
+            catch (OverflowException)
+            {
+
+                MessageBox.Show("An overflow exception has occured. Please enter smaller values", "Overflow Error");
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message + ex.GetType().ToString(), "Error");
+            }
+
 
             int months = years * 12;
             decimal monthlyInterestRate = yearlyInterestRate / 12 / 100;
