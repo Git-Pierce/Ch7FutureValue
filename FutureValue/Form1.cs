@@ -25,14 +25,21 @@ namespace FutureValue
 
             try
             {
-                monthlyInvestment = Convert.ToDecimal(txtMonthlyInvestment.Text);
-                yearlyInterestRate = Convert.ToDecimal(txtInterestRate.Text);
-                years = Convert.ToInt32(txtYears.Text);
+                if (isValidData())
+                {
+                    /* this is a comment */
+                    monthlyInvestment = Convert.ToDecimal(txtMonthlyInvestment.Text);
+                    yearlyInterestRate = Convert.ToDecimal(txtInterestRate.Text);
+                    years = Convert.ToInt32(txtYears.Text);
+                }
+                
             }
-            catch (FormatException)
+            catch (FormatException fe)
             {
 
                 MessageBox.Show("A format exception has occured. Please check your entries", "Entry Error");
+                //txtFutureValue.Focus();
+                //throw fe;
             }
             catch (OverflowException)
             {
@@ -59,12 +66,46 @@ namespace FutureValue
             decimal monthlyInterestRate, int months)
         {
             decimal futureValue = 0m;
+            //if (monthlyInvestment <= 0)
+            //{
+            //    throw new Exception("Monthly investment must > 0.");
+            //}
             for (int i = 0; i < months; i++)
             {
                 futureValue = (futureValue + monthlyInvestment)
                             * (1 + monthlyInterestRate);
             }
             return futureValue;
+        }
+        public bool isValidData()
+        {
+            return
+                isPresent(txtMonthlyInvestment, "Monthly Investment") &&
+                isPresent(txtInterestRate, "Yearly Interest Rate") &&
+                isPresent(txtYears, "Number of Years");
+        }
+        public bool isPresent(TextBox textBox, string name)
+        {
+            if (textBox.Text == "")
+            {
+                MessageBox.Show(name + " is a required field.", "Entry Error");
+                textBox.Focus();
+                return false;
+            }
+            return true;
+        }
+        public bool IsInt32(TextBox textBox, string name)
+        {
+            /* you fill in the code from the textbook */
+            return true;
+        }
+        public bool IsDecimal(TextBox textBox, string name)
+        {
+            return true;
+        }
+        public bool IsWithinRange(TextBox textBox, string name, decimal min, decimal max)
+        {
+            return true;
         }
 
         private void btnExit_Click(object sender, EventArgs e)
