@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace FutureValue
 {
-    public partial class Form1 : Form
+    public partial class FutureValue : Form
     {
-        public Form1()
+        public FutureValue()
         {
             InitializeComponent();
         }
@@ -34,7 +34,7 @@ namespace FutureValue
                 }
                 
             }
-            catch (FormatException fe)
+            catch (FormatException)
             {
 
                 MessageBox.Show("A format exception has occured. Please check your entries", "Entry Error");
@@ -86,17 +86,21 @@ namespace FutureValue
         }
         public bool isPresent(TextBox textBox, string name)
         {
+            bool success = true;
             if (textBox.Text == "")
             {
                 MessageBox.Show(name + " is a required field.", "Entry Error");
                 textBox.Focus();
-                return false;
+                success = false;
+                return success;
             }
-            return true;
+            return success;
         }
         public bool IsInt32(TextBox textBox, string name)
         {
             /* you fill in the code from the textbook */
+            //Checks for valid numeric value
+
             return true;
         }
         public bool IsDecimal(TextBox textBox, string name)
